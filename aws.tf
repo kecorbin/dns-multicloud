@@ -31,7 +31,7 @@ resource "aws_route53_record" "aws_sub_zone_ns" {
 
 resource "aws_route53_record" "kevin" {
   zone_id = "${data.aws_route53_zone.main.zone_id}"
-  name    = "kecorbin.aws.kcorbin.hashidemos.io"
+  name    = "kecorbin.kcorbin.aws.hashidemos.io"
   type    = "NS"
   ttl     = "30"
 
