@@ -23,7 +23,10 @@ resource "aws_route53_record" "aws_sub_zone_ns" {
   type    = "NS"
   ttl     = "30"
 
-  records = ["1.1.1.1"]
+  records = [
+    for awsns in aws_route53_zone.aws_sub_zone.0.name_servers:
+    awsns
+  ]
 }
 
 resource "aws_route53_record" "kevin" {
@@ -32,9 +35,7 @@ resource "aws_route53_record" "kevin" {
   type    = "NS"
   ttl     = "30"
 
-  records = [
-
-  ]
+  records = ["1.1.1.1"]
 }
 
 # Azure SUBZONE
