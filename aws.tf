@@ -2,7 +2,7 @@ data "aws_route53_zone" "main" {
   name = var.hosted-zone
 }
 
-# AWS SUBZONE 
+# AWS SUBZONE
 
 resource "aws_route53_zone" "aws_sub_zone" {
   count = var.create_aws_dns_zone ? 1 : 0
@@ -23,13 +23,21 @@ resource "aws_route53_record" "aws_sub_zone_ns" {
   type    = "NS"
   ttl     = "30"
 
+  records = ["1.1.1.1"]
+}
+
+resource "aws_route53_record" "kevin" {
+  zone_id = "${data.aws_route53_zone.main.zone_id}"
+  name    = "kecorbin.aws.kcorbin.hashidemos.io"
+  type    = "NS"
+  ttl     = "30"
+
   records = [
-    for awsns in aws_route53_zone.aws_sub_zone.0.name_servers:
-    awsns
+
   ]
 }
 
-# Azure SUBZONE 
+# Azure SUBZONE
 
 resource "aws_route53_zone" "azure_sub_zone" {
   count = var.create_azure_dns_zone ? 1 : 0
@@ -77,7 +85,7 @@ resource "aws_route53_zone" "gcp_sub_zone" {
    type    = "NS"
    ttl     = "30"
 
-   records = [ 
+   records = [
      for gcpns in google_dns_managed_zone.gcp_sub_zone.0.name_servers:
      gcpns
     ]
